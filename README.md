@@ -29,6 +29,15 @@ GOG 與 Steam 的 Space Quest 合輯就是這個版本）。
 MT-32 音效：三個包的引擎都編入了 Munt（MT-32 模擬），但 ROM 有版權不隨包散布。
 自備 `MT32_CONTROL.ROM` 與 `MT32_PCM.ROM` 放進遊戲資料夾，再到音效選項選 Roland MT-32 即可。
 
+### 驗證到什麼程度
+
+- **Linux AppImage**：實機跑過，中文正常。
+- **Windows**：在 Wine 下實測過啟動流程與設定產生（抓到並修掉三個 `.bat` 的 bug），
+  但**沒有在真實 Windows 上測過**。
+- **macOS**：由 GitHub Actions 的 `macos-14` runner 建置，`scummvm` 與 `libSDL2` 都確認是
+  universal（arm64 + x86_64），中文資料五個檔都在 `Contents/Resources/cht-data/`；
+  但**沒有在實機 macOS 上開過**。遇到問題歡迎開 issue。
+
 ## 這個 repo 有什麼、沒有什麼
 
 只放補丁，**不含遊戲本體**。你需要自備正版的 Space Quest IV CD 版
