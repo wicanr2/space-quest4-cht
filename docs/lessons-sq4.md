@@ -64,3 +64,24 @@ rulebook 81 的原則是「CJK 塞不下就拉畫布，不要縮字」；這裡�
 
 `kBig5Width = 12`（script 座標的前進寬度）→ 顯示字距 24px，剛好等於 hi-res 字框寬，
 字邊到邊密排。2141 個用到的字全部在倚天涵蓋範圍內，**零 TTF fallback**。
+
+## 六、打包踩到的雷
+
+**Windows 的 `.bat` 用括號區塊寫 ini 會只寫進第一行。**
+`> file ( echo A & echo B )` 這種寫法在部分 cmd 實作（含 wine）只有第一個 `echo` 進檔案，
+其餘噴到畫面 → 產出的 `scummvm.ini` 只剩 `[scummvm]` 一行，遊戲啟動時說「Unrecognized game」。
+改成逐行 `>> "%INI%" echo ...` 就穩。**這個 bug 只有實跑才看得出來**——腳本本身沒有語法錯誤，
+zip 打包也一切正常。
+
+**`.bat` 裡不要用 `%*` 轉發參數。** patch 版的第一個參數是遊戲路徑，已經被 `%~1` 取用，
+再用 `%*` 轉發會把它當成第二個 target 再送一次 → `Stray argument`。
+
+**ini 內容全部用 ASCII。** cmd 在不同 codepage 下用 `echo` 寫中文會變亂碼（`description=` 那行
+會整行壞掉）。中文只留在給玩家看的提示訊息與檔名。
+
+**啟動器不能靠 `--language=tw --auto-detect`。** SQ4 CD 同時符合 DOS 與 Windows 兩個偵測條目，
+`--auto-detect` 遇到兩個候選只會列出來、不會啟動；而且 SCI1.1 的偵測器在偵測階段就會用語言
+過濾條目。啟動器自己寫一份帶 `language=tw` 的 target 進 config 再指定它，兩個問題一起解決。
+
+**不要在產出的 config 裡設 `gui_language=zh_TW`。** 包裡沒附 CJK 的 GUI 字型，設了只會讓
+ScummVM 的主題引擎報 `Error loading localized Font` 並載入失敗。遊戲內的中文與 GUI 語言無關。

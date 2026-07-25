@@ -90,7 +90,6 @@ mkdir -p "\$CFGDIR"
 if [ ! -f "\$CFG" ] || ! grep -qxF "path=\$GAME" "\$CFG"; then
   cat > "\$CFG" <<CFGEOF
 [scummvm]
-gui_language=zh_TW
 
 [sq4-cht]
 engineid=sci
@@ -118,7 +117,6 @@ CFG="\$CFGDIR/scummvm.ini"
 mkdir -p "\$CFGDIR"
 cat > "\$CFG" <<CFGEOF
 [scummvm]
-gui_language=zh_TW
 
 [sq4-cht]
 engineid=sci
