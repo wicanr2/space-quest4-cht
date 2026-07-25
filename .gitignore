@@ -14,8 +14,8 @@ game_extract/
 *.zip
 *.rar
 
-# 字型:倚天點陣字模有版權,自備後用 tools/build_eten_font.py 自行烘
-*.fnt
+# 倚天原始字型檔(整套 13094 字的商業字庫)不入庫;
+# dist-cht/ 下只放「本作用到的 2141 字」烘出來的子集,隨補丁散布
 tools/assets/eten/
 
 # 手冊掃描(© 軟體世界,不推公開 repo)

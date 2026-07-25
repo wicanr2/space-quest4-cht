@@ -23,9 +23,10 @@
 | `tools/` | 抽字、烘字型、合併譯文、疊圖、實機擷取的腳本 |
 | `docs/` | 實作筆記（SCI1.1 踩到的雷與判斷依據） |
 
-字型檔（`sq4_big5.fnt` / `sq4_big5_hi.fnt`）**不在 repo 裡**，因為它是從倚天中文系統的點陣字模烘出來的。
-用 `tools/build_eten_font.py` 自己烘（需要倚天 3.53 的 `STDFONT.15`、`SPCFONT.15`、`STD.24M`、`SPCFONT.24`），
-或用 `tools/build_cht.py` + `tools/bake_hires_font.py` 從開源的 AR PL UMing 烘一份。兩者的差別見下方「字型」。
+字型檔（`sq4_big5.fnt` / `sq4_big5_hi.fnt`）已包含在 `dist-cht/`，下載後直接可用。
+它只含本作實際用到的 2,141 個字，不是完整字庫。想換字型的話：`tools/build_eten_font.py`
+可從倚天 3.53 重烘，`tools/build_cht.py` + `tools/bake_hires_font.py` 可從開源的 AR PL UMing 烘一份。
+排版格與字模尺寸已解耦，**換字型不必重編引擎**，換 `.fnt` 即可。
 
 ## 怎麼用
 
@@ -38,14 +39,9 @@ cd scummvm-src
 ./configure --disable-all-engines --enable-engine=sci --disable-detection-full
 make -j$(nproc)
 
-# 3) 烘字型（擇一）
-python3 tools/build_eten_font.py translation/translation.tsv dist-cht --prefix sq4   # 倚天，較好看
-# 或：從開源字型烘
-python3 tools/build_cht.py translation/translation.tsv dist-cht --prefix sq4 --size 15
-python3 tools/bake_hires_font.py dist-cht/sq4_big5_hi.fnt translation/translation.tsv \
-        --width 24 --height 24 --size 23
-
-# 4) 把 dist-cht/ 的四個檔（translation.tsv、兩個 .fnt、sq4_title.ovl）放進遊戲目錄
+# 3) 把 dist-cht/ 的四個檔（translation.tsv、兩個 .fnt、sq4_title.ovl）放進遊戲目錄
+#    （字型已附在 repo 裡，想自己重烘才需要下面這幾行）
+# python3 tools/build_eten_font.py translation/translation.tsv dist-cht --prefix sq4
 ```
 
 **中文要靠 target 設定啟用，不是命令列參數**。在 `scummvm.ini` 的遊戲條目裡加 `language=tw`：
@@ -156,6 +152,6 @@ MT-32 音樂：ScummVM 音效選項選 Roland MT-32，並把自備的 `MT32_CONT
 是非商業的繁體中文化與歷史保存。
 
 - **ScummVM**（GPLv3+）：引擎補丁依 GPL 釋出；若釋出修改過的執行檔會一併附上對應原始碼。
-- **倚天中文系統**點陣字模：不隨本 repo 散布，需自備。
+- **倚天中文系統**點陣字模：`dist-cht/` 內的 `.fnt` 是本作用到的 2,141 字子集，非完整字庫。
 - 1992 年中文說明書：《軟體世界》珍藏系列 96；掃描檔版權屬原出版者，不收錄於此。
   文字內容由「軟體世界說明書補完計劃」保存流傳。
