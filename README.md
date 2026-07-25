@@ -142,6 +142,30 @@ MT-32 音效：三個包的引擎都編入了 Munt（MT-32 模擬），但 ROM �
 
 ---
 
+## 防拷與時空艙座標
+
+[`docs/copy-protection.md`](docs/copy-protection.md)
+
+**這個中文版不會問你防拷問題。** CD 語音版把防拷關卡整個拿掉了——防拷房間的程式
+（`script.815` / `heap.815`）在資源裡根本不存在，只剩沒清乾淨的美術與文字。
+把 `view.815` 解碼出來就是那台鍵盤本人：
+
+<img src="screenshots/copyprot-keypad.png" width="150">
+
+實測開機到可操作全程沒有任何輸入框：
+
+<img src="screenshots/boot-no-copyprotection.png" width="720">
+
+文件裡另外整理了：
+
+| 內容 | 用途 |
+|---|---|
+| [四項資源層驗證](docs/copy-protection.md#怎麼確定不是還沒走到那一步) | 為什麼確定後段也不會問 |
+| [符號座標對照表](docs/copy-protection.md#符號對照表) | 給手上是**軟碟版**的人查 |
+| [秘密座標彩蛋](docs/copy-protection.md#秘密座標彩蛋) | 隱藏時空目的地的儀表板符號 |
+
+---
+
 ## 譯名
 
 人名沿用本團隊《宇宙傳奇 III》繁中版，地名採 1992 年軟體世界代理版中文說明書（珍藏版 96）。
