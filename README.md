@@ -21,7 +21,8 @@
 | `dist-cht/` | 執行期中文資料：`translation.tsv`（Big5）、兩份倚天字型、中文標題疊圖 `sq4_title.ovl`、中文化的暫停面板 `view.947` |
 | `translation/` | 翻譯原始資料：抽字骨架、UTF-8 譯文、譯名表、批次檔 |
 | `tools/` | 抽字、烘字型、合併譯文、疊圖、實機擷取的腳本 |
-| `docs/` | 實作筆記（SCI1.1 踩到的雷與判斷依據） |
+| `docs/` | 實作筆記（SCI1.1 踩到的雷與判斷依據）、中文攻略 |
+| `.github/workflows/` | macOS universal（arm64＋x86_64）的 CI build |
 
 字型檔（`sq4_big5.fnt` / `sq4_big5_hi.fnt`）已包含在 `dist-cht/`，下載後直接可用。
 它只含本作實際用到的 2,141 個字，不是完整字庫。想換字型的話：`tools/build_eten_font.py`
