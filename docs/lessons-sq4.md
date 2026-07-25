@@ -85,3 +85,32 @@ zip 打包也一切正常。
 
 **不要在產出的 config 裡設 `gui_language=zh_TW`。** 包裡沒附 CJK 的 GUI 字型，設了只會讓
 ScummVM 的主題引擎報 `Error loading localized Font` 並載入失敗。遊戲內的中文與 GUI 語言無關。
+
+## 七、推廣片
+
+配樂是**原版遊戲音樂**（rulebook 93 [HARD]：不可自產、不可用合成器逼近）。做法是 SDL disk-audio
+即時側錄 Munt 的 MT-32 輸出：
+
+```
+SDL_AUDIODRIVER=disk SDL_DISKAUDIOFILE=cap.raw \
+  scummvm --music-driver=mt32 --extrapath=<放 ROM 的夾> --music-volume=255 --output-rate=44100
+```
+
+**不要設 `SDL_DISKAUDIODELAY=0`**。那是全速輸出，但 SCI 的音樂排序器是依遊戲時鐘推進的——
+全速下 audio callback 狂抽而排序器不動，會灌出 GB 級的檔案卻整段 −91 dB 靜音。即時錄 130 秒
+wall-clock 得到 93.9 秒音訊（16.5 MB），`volumedetect` 量到 mean −23.5 dB、max −3.3 dB
+（非靜音、無破音），log 出現 `Falling back to MT32` 代表 ROM 真的載入了。
+
+合成端的雷（都寫在 kb `game-promo-video-ffmpeg`，這次確認仍然成立）：
+
+- **不用 zoompan**。靜態圖 + fade 就夠，zoompan 的 `d` 是「每個輸入幀輸出 d 幀」，
+  配上前置 `fps` 會變成 `(FPS×S)²` 幀。
+- **配樂比影片短時不能用 `-shortest`**，會把結尾卡一起砍掉。先 `aloop` 無限循環再
+  `atrim` 剪到影片長度，視訊音訊自然等長（本片兩者都是 84.12s）。
+- **4:3 的遊戲畫面不要直接 resize 成 16:9**。SPACE QUEST 的 logo 一眼就看得出被拉扁；
+  等比縮到內容區高度、置中，兩側露出主題底色即可。
+- **抽幀檢查要抽片段中點**，抽在邊界上會落在 0.5 秒的 fade 裡，看起來像整張卡都太暗。
+
+本片的 theme 是從實機截圖的 dominant colors 取的（標題畫面的深藍 `#020312`/`#0D105E`、
+logo 銀藍 `#688FF1`、氙星天空的熔岩橘 `#E74E03`），科幻題材用無襯線字、母題是 CRT 掃描線——
+刻意不沿用其他專案的配色模板。

@@ -34,3 +34,11 @@ extract/
 __pycache__/
 *.o
 *.pyc
+
+# 推廣片素材與成品:含遊戲畫面與原版配樂(他人著作權),不入公開 repo
+out/
+video/
+video_src/
+*.mp4
+*.wav
+*.raw
