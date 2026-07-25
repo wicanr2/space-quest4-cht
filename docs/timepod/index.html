@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>時空艙座標模擬器 — 宇宙傳奇 IV 繁體中文化</title>
+<meta name="description" content="《宇宙傳奇 IV》時空艙鍵盤模擬器。符號與座標表直接從遊戲資源反組譯取得，可以先在線上試按，不必在遊戲裡手忙腳亂。">
+<style>
+:root{
+  --bg:#020312; --bg2:#0D105E; --accent:#E74E03; --accent2:#688FF1;
+  --led:#37E03B; --key:#C42020; --panel:#141a3a; --line:#2a3160; --dim:#8b93c0;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:
+    radial-gradient(ellipse at 50% -10%, var(--bg2) 0%, var(--bg) 62%) fixed;
+  color:#e8ecff; font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  line-height:1.7; -webkit-text-size-adjust:100%;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:99; opacity:.16;
+  background:repeating-linear-gradient(to bottom,rgba(0,0,0,.6) 0 1px,transparent 1px 3px);
+}
+.wrap{max-width:1120px; margin:0 auto; padding:28px 18px 80px}
+header{text-align:center; padding:16px 0 26px}
+h1{font-size:clamp(24px,4.4vw,38px); margin:0 0 8px; letter-spacing:.04em}
+h1 small{display:block; font-size:.42em; color:var(--accent2); letter-spacing:.22em; font-weight:400; margin-bottom:10px}
+.sub{color:var(--dim); margin:0; font-size:15px}
+.sub a{color:var(--accent2)}
+
+.stage{display:grid; grid-template-columns:minmax(0,300px) minmax(0,1fr); gap:24px; align-items:start}
+@media(max-width:820px){.stage{grid-template-columns:1fr}}
+
+/* --- 艙內面板 --- */
+.pod{
+  background:linear-gradient(#1b2350,#0d1130); border:2px solid var(--line);
+  border-radius:14px; padding:16px; box-shadow:0 0 0 4px #05070f inset, 0 18px 44px rgba(0,0,0,.5);
+}
+.pod h2{font-size:13px; letter-spacing:.3em; color:var(--accent2); margin:0 0 12px; text-align:center; font-weight:600}
+.readout{
+  background:#0a1408; border:3px solid #303a70; border-radius:6px;
+  padding:10px 8px; display:flex; justify-content:center; gap:5px; min-height:66px; align-items:center;
+  box-shadow:0 0 22px rgba(55,224,59,.16) inset;
+}
+.slot{width:40px; height:40px; display:flex; align-items:center; justify-content:center}
+.slot img{width:100%; height:auto; image-rendering:pixelated}
+.slot.empty{border-bottom:2px solid #1e4a1e}
+.keypad{display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:14px}
+.key{
+  background:#221528; border:1px solid #4a2030; border-radius:4px; padding:5px 2px;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .06s, box-shadow .12s, background .12s;
+}
+.key img{width:100%; height:auto; image-rendering:pixelated; display:block}
+.key:hover{background:#3a1c28; box-shadow:0 0 12px rgba(231,78,3,.5)}
+.key:active{transform:translateY(2px)}
+.row2{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px}
+button.act{
+  font:inherit; font-size:15px; padding:10px; border-radius:5px; cursor:pointer;
+  border:1px solid var(--line); background:#1d2450; color:#e8ecff;
+}
+button.act:hover{background:#2a3470}
+button.ent{background:var(--key); border-color:#7d1414; font-weight:600; letter-spacing:.1em}
+button.ent:hover{background:#e03030}
+
+/* --- 螢幕 --- */
+.viewport{
+  background:#05070f; border:2px solid var(--line); border-radius:12px; overflow:hidden;
+  box-shadow:0 18px 44px rgba(0,0,0,.5);
+}
+.viewport img{width:100%; display:block; image-rendering:pixelated; aspect-ratio:8/5; object-fit:cover}
+.vinfo{padding:14px 18px; border-top:1px solid var(--line); background:#0b0f28; min-height:112px}
+.vinfo h3{margin:0 0 6px; font-size:19px}
+.vinfo h3 .rn{font-size:12px; color:var(--dim); font-weight:400; margin-left:8px; letter-spacing:.08em}
+.vinfo p{margin:0; color:#c4cbf0; font-size:14.5px}
+.vinfo.bad h3{color:var(--accent)}
+.idle{color:var(--dim)}
+
+/* --- 表格 --- */
+section{margin-top:44px}
+h2.sec{font-size:20px; border-left:4px solid var(--accent); padding-left:12px; margin:0 0 6px}
+.lead{color:var(--dim); margin:0 0 18px; font-size:15px}
+.tblwrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:14.5px}
+th,td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:middle}
+th{background:#141a3a; color:var(--accent2); font-weight:600; white-space:nowrap}
+td.code{background:#0a1408; white-space:nowrap}
+td.code img{height:26px; width:auto; image-rendering:pixelated; margin-right:2px; vertical-align:middle}
+.chart{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
+.chip{background:#0a1408; border:1px solid #2a3160; border-radius:6px; padding:7px 9px 4px; text-align:center; min-width:52px}
+.chip img{height:30px; image-rendering:pixelated; display:block; margin:0 auto}
+.chip b{font-size:12px; color:var(--dim); font-weight:500}
+.note{border-left:3px solid var(--accent2); background:#0d1130; padding:12px 16px; margin:18px 0; font-size:14.5px; color:#c4cbf0}
+.note b{color:#fff}
+code{background:#0d1130; padding:1px 6px; border-radius:3px; font-size:.92em; color:var(--accent2)}
+footer{margin-top:56px; padding-top:22px; border-top:1px solid var(--line); color:var(--dim); font-size:13.5px; text-align:center}
+footer a{color:var(--accent2)}
+.pill{display:inline-block; background:#1d2450; border:1px solid var(--line); border-radius:99px; padding:3px 12px; font-size:12.5px; color:var(--accent2); margin:0 4px 6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1><small>SPACE QUEST IV · TIME-O-MATIC</small>時空艙座標模擬器</h1>
+  <p class="sub">按下符號、送出，看看會被丟到哪裡。座標表直接從遊戲的 <code>script.531</code> 反組譯取得，並在實機上按過確認。<br>
+  回到 <a href="https://github.com/wicanr2/space-quest4-cht">《宇宙傳奇 IV》繁體中文化</a></p>
+</header>
+
+<div class="stage">
+  <div class="pod">
+    <h2>TIME-O-MATIC</h2>
+    <div class="readout" id="readout"></div>
+    <div class="keypad" id="keypad"></div>
+    <div class="row2">
+      <button class="act" id="clr">清除</button>
+      <button class="act ent" id="ent">ENT</button>
+    </div>
+  </div>
+
+  <div class="viewport">
+    <img id="scene" src="a/s305.png" alt="目的地畫面">
+    <div class="vinfo" id="vinfo">
+      <h3 class="idle">等待輸入座標</h3>
+      <p class="idle">鍵盤有 15 個符號，座標是 6 個一組。試試看左邊的表格裡那幾組。</p>
+    </div>
+  </div>
+</div>
+
+<section>
+  <h2 class="sec">符號對照</h2>
+  <p class="lead">遊戲的鍵盤共 15 個符號，排成 5 欄 3 列。它們沒有對應的英數字，只能照樣子按——這也是為什麼線上先試一遍比較不會慌。</p>
+  <div class="note" style="margin-bottom:16px">
+    <b>符號會從右邊擠進來。</b>讀數螢幕有 6 格，每按一次，新符號進到最右邊、舊的往左推。
+    所以你按的順序，就是螢幕上由左到右讀出來的順序——本頁所有座標都照這個順序列。
+  </div>
+  <div class="chart" id="chart"></div>
+</section>
+
+<section>
+  <h2 class="sec">固定座標</h2>
+  <p class="lead">這幾組寫死在遊戲程式裡，每個人、每一輪遊戲都一樣。</p>
+  <div class="tblwrap"><table id="fixed"></table></div>
+</section>
+
+<section>
+  <h2 class="sec">隨機座標：為什麼沒有攻略列得出來</h2>
+  <p class="lead">回黑暗未來氙星那組座標，是<b>每次開新遊戲即時亂數產生的</b>。</p>
+  <div class="note">
+    遊戲一開場，<code>script.803</code> 就跑了這段：最後一個符號固定，前面五個各叫一次
+    <code>Random(0,14)</code> 塞進全域變數 174–178。時空艙儀表板顯示的就是這組值。<br><br>
+    也就是說——<b>你的座標和別人的不一樣</b>。任何攻略上寫「氙星座標是這六個」都只是那個人那一輪的結果，照抄不會有用。
+    遊戲裡叫你抄下來，是真的要你抄。
+  </div>
+  <div class="tblwrap"><table id="rnd"></table></div>
+  <p style="margin-top:14px"><button class="act" id="roll">產生一組模擬座標（等同開一次新遊戲）</button></p>
+  <div id="rollout" style="margin-top:12px"></div>
+</section>
+
+<section>
+  <h2 class="sec">被剪掉的那一站</h2>
+  <p class="lead">連續輸入三組座標（共 18 個符號）會通往一個房間，裡面堆滿了「因為法律理由被 Sierra 從遊戲裡拿掉的東西」。</p>
+  <div class="tblwrap"><table id="seq"></table></div>
+  <div class="note">
+    這個彩蛋在 CD 語音版<b>進不去</b>。房間的程式（<code>script.271</code>）被移除了，只剩下背景圖（<code>pic.570</code>）和對白（<code>message.271</code>）
+    留在資源裡——原版跑到這裡會直接當掉。ScummVM 偵測到沒有 <code>script.271</code> 就會停用這組座標，所以按下去只會沒反應，不會壞掉。<br><br>
+    最好笑的地方是：<b>那個房間本身也被拿掉了。</b>裡面的告示牌寫著「這裡好像是專門堆放 Sierra 遊戲裡因法律理由被拿掉的東西的倉庫」。
+  </div>
+  <p style="margin-top:14px"><button class="act" id="seqdemo">看看那個房間長什麼樣</button></p>
+</section>
+
+<section>
+  <h2 class="sec">實機驗證過</h2>
+  <p class="lead">反組譯讀出來的東西，還是得按過才算數。用 ScummVM 的除錯器跳進時空艙，照表按下尤倫斯荒原那組：</p>
+  <img src="a/verify.png" alt="實機驗證：輸入座標後抵達尤倫斯荒原"
+       style="width:100%;max-width:640px;image-rendering:pixelated;border:2px solid var(--line);border-radius:8px">
+  <p style="color:#c4cbf0;font-size:14.5px;margin-top:12px">
+    引擎啟動 → 時空亂流 → 黃色沙漠，狀態列跟著變成《宇宙傳奇 I — 沙利安人的邂逅》。
+    第一次照表值原樣輸入被判無效，才發現顯示格是<b>由右往左</b>編號（<code>local[20]</code> 是最右邊那格，
+    x 座標 <code>289 − t×7</code>），反過來按就對了。本頁列的都是反轉後的按鍵順序。
+  </p>
+</section>
+
+<section>
+  <h2 class="sec">這些資料怎麼來的</h2>
+  <p class="lead">不是抄社群整理，是把遊戲資源拆開讀出來的。步驟都可以自己重跑：</p>
+  <p>
+    <span class="pill">heap.531 → 15 顆按鍵座標</span>
+    <span class="pill">script.531 → 兩張比對表</span>
+    <span class="pill">view.531 → 符號圖</span>
+    <span class="pill">pic.NNN → 目的地畫面</span>
+  </p>
+  <p style="color:#c4cbf0; font-size:14.5px">
+    時空艙是 531 號房。<code>heap.531</code> 的 local 變數裡，L27–L56 是 15 顆按鍵的螢幕座標（5 欄 × 3 列），
+    L57 之後每 6 個一組就是一條座標。<code>script.531</code> 裡有兩個比對函式，把顯示器上 6 個符號逐一跟表裡的值比，
+    對上就跳對應的房間號。細節與反組譯工具見
+    <a href="https://github.com/wicanr2/space-quest4-cht/blob/main/docs/timepod-coordinates.md">完整分析文件</a>。
+  </p>
+</section>
+
+<footer>
+  《宇宙傳奇 IV — 時空穿越者》繁體中文化專案　·
+  <a href="https://github.com/wicanr2/space-quest4-cht">GitHub</a><br>
+  遊戲畫面與符號圖版權屬 Sierra On-Line。本頁為粉絲中文化專案的資料整理，不含遊戲本體。
+</footer>
+
+</div>
+
+<script>
+// ── 座標表（值 = 符號索引 0..14，直接取自 heap.531 的 local 變數）────────────
+const FIXED = [
+  { code:[0,1,2,3,4,5],    room:650, img:'a/s650.png',   name:'奧特佳（熔岩星球）',
+    desc:'《宇宙傳奇 III》的火山星球。沒有保暖裝備，羅傑一下艙就被烤成一灘。存檔再來。' },
+  { code:[9,13,7,1,11,6],  room:613, img:'a/s613.png',   name:'尤倫斯荒原',
+    desc:'《宇宙傳奇 I》的沙漠小鎮。這組是正規劇情要用的——前三個符號在艾斯楚斯翼龍巢穴的口香糖包裝紙上，後三個在銀河購物中心買到的攻略本上。' },
+  { code:[11,1,9,6,14,4],  room:null, img:'a/slunacy.png', name:'我愛露納西',
+    desc:'不換場景，跳出一段惡搞老影集《我愛露西》片頭的動畫。純彩蛋。' },
+];
+const RANDOM = [
+  { last:[10], room:530, img:'a/s530.png', name:'續集警察調度中心（黑暗未來氙星）',
+    desc:'最後一個符號固定，前五個開新遊戲時亂數決定（全域變數 174–178）。第五章要靠這組回去。' },
+  { last:[2,13], room:376, img:'a/s376.png', name:'太空幣比爾遊樂場',
+    desc:'最後一個符號是這兩個之一（看你記下的座標大不大於 10），前五個一樣是亂數（全域變數 180–184）。' },
+];
+const PLAYER = { room:305, img:'a/s305.png', name:'艾斯楚斯',
+    desc:'你自己在艙內記下的那組座標會存進全域變數 122–127，之後輸入就會回到這裡。' };
+const SEQ = [[3,8,6,9,0,2],[2,5,8,6,4,4],[0,0,0,0,0,6]];
+
+const $ = s => document.querySelector(s);
+let buf = [], seqStage = 0;
+
+// ── 鍵盤與顯示器 ────────────────────────────────────────────────────────────
+const keypad = $('#keypad');
+for (let i = 0; i < 15; i++) {
+  const b = document.createElement('div');
+  b.className = 'key'; b.dataset.i = i;
+  b.innerHTML = `<img src="a/k${i}.png" alt="符號 ${i}">`;
+  b.addEventListener('click', () => press(i));
+  keypad.appendChild(b);
+}
+const chart = $('#chart');
+for (let i = 0; i < 15; i++) {
+  const c = document.createElement('div');
+  c.className = 'chip';
+  c.innerHTML = `<img src="a/d${i}.png" alt=""><b>${i}</b>`;
+  chart.appendChild(c);
+}
+function draw() {
+  const r = $('#readout'); r.innerHTML = '';
+  for (let i = 0; i < 6; i++) {
+    const s = document.createElement('div');
+    s.className = 'slot' + (buf[i] === undefined ? ' empty' : '');
+    if (buf[i] !== undefined) s.innerHTML = `<img src="a/d${buf[i]}.png" alt="">`;
+    r.appendChild(s);
+  }
+}
+function press(i) { if (buf.length < 6) { buf.push(i); draw(); } }
+$('#clr').addEventListener('click', () => { buf = []; draw(); });
+$('#ent').addEventListener('click', submit);
+draw();
+
+// ── 送出 ────────────────────────────────────────────────────────────────────
+const same = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
+
+function show(img, title, room, desc, bad) {
+  if (img) $('#scene').src = img;
+  $('#vinfo').className = 'vinfo' + (bad ? ' bad' : '');
+  $('#vinfo').innerHTML =
+    `<h3>${title}${room ? `<span class="rn">room ${room}</span>` : ''}</h3><p>${desc}</p>`;
+}
+
+function submit() {
+  if (buf.length < 6) {
+    show(null, '座標還沒輸入完', null, `還差 ${6 - buf.length} 個符號。`, true);
+    return;
+  }
+  const code = buf.slice(); buf = []; draw();
+
+  for (const d of FIXED) {
+    if (same(code, d.code)) { seqStage = 0; return show(d.img, d.name, d.room, d.desc); }
+  }
+  // 三段式序列
+  if (same(code, SEQ[seqStage])) {
+    seqStage++;
+    if (seqStage >= SEQ.length) {
+      seqStage = 0;
+      return show('a/s570.png', '「因法律理由被拿掉的東西」倉庫', 271,
+        '三組座標全對。原版跑到這裡會找不到房間直接當掉，ScummVM 已經把這組停用——實機上按下去只會沒反應。');
+    }
+    return show(null, `序列進行中（${seqStage}/3）`, null,
+      '這組本身不通往任何地方，但遊戲記住了。再輸入下一組。', false);
+  }
+  seqStage = 0;
+  for (const d of RANDOM) {
+    if (d.last.includes(code[5]))
+      return show(d.img, d.name + '（可能）', d.room,
+        d.desc + '　末碼對得上，但前五個是你那一輪遊戲的亂數——模擬器無從得知，這裡當作猜中。');
+  }
+  show(null, '什麼事都沒發生', null,
+    '那個代碼一定是無效的，再試一次！<br><span style="color:#8b93c0;font-size:13px">（這句是遊戲原文的中文化譯句）</span>', true);
+}
+
+// ── 表格 ────────────────────────────────────────────────────────────────────
+const cells = c => c.map(i => `<img src="a/d${i}.png" alt="${i}">`).join('');
+function tryBtn(c) {
+  return `<button class="act" style="padding:4px 10px;font-size:13px"
+          onclick='buf=${JSON.stringify(c)};draw();'>填入</button>`;
+}
+$('#fixed').innerHTML =
+  '<tr><th>座標</th><th>目的地</th><th>說明</th><th></th></tr>' +
+  FIXED.map(d => `<tr><td class="code">${cells(d.code)}</td><td><b>${d.name}</b><br>
+    <span style="color:#8b93c0;font-size:12.5px">${d.room ? 'room ' + d.room : '彩蛋動畫'}</span></td>
+    <td>${d.desc}</td><td>${tryBtn(d.code)}</td></tr>`).join('');
+
+$('#rnd').innerHTML =
+  '<tr><th>末碼</th><th>目的地</th><th>其餘五個符號</th></tr>' +
+  RANDOM.map(d => `<tr><td class="code">${cells(d.last)}</td>
+    <td><b>${d.name}</b><br><span style="color:#8b93c0;font-size:12.5px">room ${d.room}</span></td>
+    <td>${d.desc}</td></tr>`).join('') +
+  `<tr><td class="code" style="color:#8b93c0;font-size:13px">你自己記的</td>
+    <td><b>${PLAYER.name}</b><br><span style="color:#8b93c0;font-size:12.5px">room ${PLAYER.room}</span></td>
+    <td>${PLAYER.desc}</td></tr>`;
+
+$('#seq').innerHTML =
+  '<tr><th>順序</th><th>座標</th><th></th></tr>' +
+  SEQ.map((c, i) => `<tr><td>第 ${i + 1} 組</td><td class="code">${cells(c)}</td><td>${tryBtn(c)}</td></tr>`).join('');
+
+// ── 亂數示範 ────────────────────────────────────────────────────────────────
+$('#roll').addEventListener('click', () => {
+  const c = []; for (let i = 0; i < 5; i++) c.push(Math.floor(Math.random() * 15)); c.push(10);
+  $('#rollout').innerHTML =
+    `<div class="readout" style="max-width:290px">${cells(c).replace(/<img/g, '<img style="height:38px;image-rendering:pixelated;margin:0 2px"')}</div>
+     <p style="color:#8b93c0;font-size:14px;margin-top:8px">這是「這一輪」的氙星座標。重按一次就變了——遊戲裡也一樣。</p>`;
+});
+$('#seqdemo').addEventListener('click', () => {
+  show('a/s570.png', '「因法律理由被拿掉的東西」倉庫', 271,
+    '背景圖 pic.570 還留在遊戲資源裡。看得到 DROIDS R US 的招牌、兩個安卓半人（Two Guys from Andromeda）在彈吉他，還有一堆從其他 Sierra 遊戲裡撤下來的東西。');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>

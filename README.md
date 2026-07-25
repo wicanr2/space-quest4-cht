@@ -142,7 +142,42 @@ MT-32 音效：三個包的引擎都編入了 Munt（MT-32 模擬），但 ROM �
 
 ---
 
-## 防拷與時空艙座標
+## 時空艙座標全解 ＋ 線上模擬器
+
+**<https://wicanr2.github.io/space-quest4-cht/timepod/>**
+
+時空艙鍵盤能去哪裡，中文圈一直沒有完整整理。原因不只是沒人做——**有一半的座標每個人都不一樣**。
+
+線上模擬器可以先把符號按過一遍，看看會跳到哪裡，不必在遊戲裡手忙腳亂：
+
+<img src="screenshots/timepod-symbols.png" width="720">
+
+### 固定座標
+
+| 座標（按鍵順序） | 目的地 |
+|---|---|
+| <img src="screenshots/code-ulence.png" width="150"> | **尤倫斯荒原**（room 613）——正規劇情用，前三符號在口香糖包裝紙、後三在攻略本 |
+| <img src="screenshots/code-ortega.png" width="150"> | **奧特佳熔岩星球**（room 650）——羅傑會融化，先存檔 |
+| <img src="screenshots/code-lunacy.png" width="150"> | **我愛露納西**彩蛋動畫 |
+
+### 隨機座標
+
+回黑暗未來氙星那組是**每次開新遊戲即時亂數產生的**（`script.803` 開場叫五次 `Random(0,14)`）。
+任何攻略寫「氙星座標是這六個」都只是那個人那一輪的結果。遊戲叫你抄下來，是真的要你抄。
+
+### 實機驗證過
+
+<img src="screenshots/timepod-verify.png" width="640">
+
+照表值原樣按下去竟然被判無效——回頭看顯示格的建立迴圈，x 座標是 `289 − t×7`，
+所以 `local[20]` 是**最右邊**那格，比對由右往左，表裡的值要反過來按。反轉後再試就成了。
+
+完整推導、被剪掉的隱藏房間、以及為此寫的 SCI1.1 反組譯器，見
+[`docs/timepod-coordinates.md`](docs/timepod-coordinates.md)。
+
+---
+
+## 防拷
 
 [`docs/copy-protection.md`](docs/copy-protection.md)
 
