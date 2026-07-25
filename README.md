@@ -10,6 +10,25 @@
 
 ![開場詢問](screenshots/02-intro-choice.png)
 
+## 下載
+
+[Releases](https://github.com/wicanr2/space-quest4-cht/releases) 有三個平台的補丁包，都**不含遊戲本體**——
+你需要自備正版的 Space Quest IV CD 版（`resource.000` / `resource.aud` / `resource.map`；
+GOG 與 Steam 的 Space Quest 合輯就是這個版本）。
+
+| 平台 | 檔案 | 怎麼跑 |
+|---|---|---|
+| Linux x86_64 | `SQ4-CHT-patch-x86_64.AppImage` | `./SQ4-CHT-patch-x86_64.AppImage ~/games/sq4` |
+| Windows x86_64 | `SQ4-CHT-patch-win64.zip` | 解壓後把遊戲資料夾拖到「宇宙傳奇4-中文版.bat」上 |
+| macOS universal | `SQ4-CHT-patch-macos-universal.tar.gz` / `.dmg` | 見包內 `README-cht.txt`；未簽署，首次執行要 `xattr -dr com.apple.quarantine` |
+
+啟動器會自動產生一份帶 `language=tw` 的 ScummVM 設定並直接啟動。
+**不要改用命令列的 `--language=tw`**：SCI1.1 的偵測器在偵測階段就會用語言過濾條目，
+而且 SQ4 CD 同時符合 DOS 與 Windows 兩個偵測條目，`--auto-detect` 只會列出候選、不會啟動。
+
+MT-32 音效：三個包的引擎都編入了 Munt（MT-32 模擬），但 ROM 有版權不隨包散布。
+自備 `MT32_CONTROL.ROM` 與 `MT32_PCM.ROM` 放進遊戲資料夾，再到音效選項選 Roland MT-32 即可。
+
 ## 這個 repo 有什麼、沒有什麼
 
 只放補丁，**不含遊戲本體**。你需要自備正版的 Space Quest IV CD 版
