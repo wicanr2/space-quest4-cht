@@ -45,7 +45,8 @@ if [ "$MODE" = patch ]; then
   mkdir -p "$APPDIR/usr/share/scummvm-cht"
   cp "$ROOT/dist-cht/translation.tsv" "$ROOT/dist-cht/sq4_big5.fnt" \
      "$ROOT/dist-cht/sq4_big5_hi.fnt" "$ROOT/dist-cht/sq4_title.ovl" \
-     "$ROOT/dist-cht/view.947" "$APPDIR/usr/share/scummvm-cht/"
+     "$ROOT/dist-cht/view.947" \
+     "$ROOT/dist-cht/271.scr" "$ROOT/dist-cht/271.hep" "$APPDIR/usr/share/scummvm-cht/"
 else
   echo ">> 放入遊戲資料(game/ 已含中文資料)"
   mkdir -p "$APPDIR/usr/share/game"

@@ -80,7 +80,12 @@
 
 > 抱歉，羅傑。因為法律理由，**你**被踢出遊戲了。
 
-想看它長什麼樣，[線上模擬器](https://wicanr2.github.io/space-quest4-cht/timepod/)有背景圖。
+**本專案把這個房間寫回去了。** 自己寫了一個 SCI1.1 組譯器產生 `271.scr` / `271.hep`，
+`dist-cht/` 已內含，三平台 patch 包都會帶上——ScummVM 偵測到 `script.271` 存在就會自動
+停用那條「停用該座標」的 patch，這組座標因此自動復活。做法與現況見
+[把倉庫寫回遊戲](room271-restoration.md)。
+
+想先看它長什麼樣，[線上模擬器](https://wicanr2.github.io/space-quest4-cht/timepod/)有背景圖。
 
 ---
 
