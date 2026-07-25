@@ -97,6 +97,21 @@ dcard(){ # $1 out  $2 中文  $3 英文原文  $4 場景標
     -font "$FR" -fill "$DIM"      -gravity southwest -pointsize 24  -annotate +72+90  "$3" "$1"
 }
 
+# 防呆:凡是拿來展示「中文對白」的截圖,先確認它真的有對白框。
+# 這道檢查是踩過才加的——原本 slide_full 配了一張只有圖示欄的畫面,字幕卻寫
+# 「640×400 高解析中文」,成片裡那一幕一個中文都沒有。檔名看起來都一樣,肉眼掃
+# contact sheet 也容易漏,只有機器驗才穩。
+# 做法:量畫面中段淺灰像素(SCI 對白框的底色)的比例,低於門檻就中止。
+assert_has_dialog(){ # $1 截圖檔名
+  local pct
+  pct=$(convert "$SHOT/$1" -crop ${GW}x${GH}+${GX}+${GY} +repage \
+        -crop 520x200+60+60 +repage \
+        -fuzz 12% -fill white -opaque '#a8a8a8' -fill black +opaque white \
+        -format "%[fx:mean*100]" info:)
+  awk -v p="$pct" 'BEGIN{ if (p+0 < 8) exit 1 }' || {
+    echo "!! $1 看起來沒有對白框（淺灰佔比 ${pct}%）——別拿它展示中文對白"; exit 1; }
+}
+
 kb(){ # $1 png  $2 mp4  $3 秒 —— 靜態 + 淡入淡出
   local FO; FO=$(awk "BEGIN{print $3-0.5}")
   ffmpeg -y -loglevel error -loop 1 -i "$1" -t "$3" -r $FPS \
@@ -115,15 +130,20 @@ bigcard "$TMP/03.png" "而這一次，他說中文" "繁體中文化 v1.0"
 card    "$TMP/04.png" "1,677 則"      "TRANSLATED"                          "對白・旁白・選單　全繁中"
 
 # --- 主體:前後對照 + 對白卡交錯 ---
+for f in sh_10.png sh_22.png tr_12.png en_10.png en_22.png; do assert_has_dialog "$f"; done
 split_ba  "$TMP/10.png" en_08.png sh_09.png "標題畫面"
 slide_full "$TMP/11.png" sh_09.png "不蓋原版 logo，中文副標疊在下方留白處"
 split_ba  "$TMP/12.png" en_10.png sh_10.png "開場詢問"
 dcard     "$TMP/13.png" "巨石漢堡的精華已經永遠附著在你的舌頭上了！" \
                         "Essence of Monolith Burger now coats your tongue - forever!" "巨石漢堡"
-split_ba  "$TMP/14.png" en_21.png sh_18.png "遊戲內旁白"
-slide_full "$TMP/15.png" sh_18.png "640×400 高解析中文，倚天 24 點明體直繪"
+# [雷] 截圖檔名要逐幀核實過才用。sh_18 是「圖示欄降下來」那幀,根本沒有對白框——
+#      拿它配「高解析中文」的字幕,畫面上一個中文都看不到。有對白框的是 sh_21/22/23,
+#      是用 out/shots/boxes.png(偵測淺灰對白框 + 標註檔名的 montage)逐張確認出來的。
+split_ba  "$TMP/14.png" en_22.png sh_22.png "遊戲內旁白"
+slide_full "$TMP/15.png" sh_22.png "640×400 高解析中文，倚天 24 點明體直繪"
 dcard     "$TMP/16.png" "別把兔子丟向續集警察！他的火氣可能一「觸」即發。" \
                         "Don't throw the bunny at the Sequel Policeman!" "氙星街頭"
+slide_full "$TMP/16b.png" tr_12.png "每個場景的描述都翻了，不是只有主線對白"
 split_ba  "$TMP/17.png" en_26.png sh_26.png "暫停面板"
 slide_full "$TMP/18.png" sh_26.png "連烘進美術圖的按鈕字都重繪成中文"
 dcard     "$TMP/19.png" "羅傑·威爾科，你還敢回來，膽子不小嘛。" \
@@ -139,7 +159,7 @@ LIST="$TMP/list.txt"; : > "$LIST"
 add(){ kb "$TMP/$1.png" "$TMP/s_$1.mp4" "$2"; echo "file '$TMP/s_$1.mp4'" >> "$LIST"; }
 add 00 4 ; add 01 5 ; add 02 4 ; add 03 4.5 ; add 04 4
 add 10 5 ; add 11 4.5 ; add 12 4.5 ; add 13 5 ; add 14 5
-add 15 4.5 ; add 16 5 ; add 17 5 ; add 18 4.5 ; add 19 5
+add 15 4.5 ; add 16 5 ; add 16b 4.5 ; add 17 5 ; add 18 4.5 ; add 19 5
 add 90 4 ; add 98 4.5 ; add 99 6
 
 echo ">> concat"
