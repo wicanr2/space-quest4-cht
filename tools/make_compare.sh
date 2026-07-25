@@ -20,8 +20,11 @@ cmp2(){ # $1 out  $2 英文截圖  $3 中文截圖
     -bordercolor "$BG" -border ${PAD} "$OUT/$1"
 }
 
-cmp2 cmp-title.png     en_08.png sh_09.png
-cmp2 cmp-intro.png     en_10.png sh_10.png
-cmp2 cmp-narration.png en_21.png sh_18.png
-cmp2 cmp-panel.png     en_26.png sh_26.png
+# 配對是逐幀比對過的(見 out/shots/boxes.png),不是照 index 猜的
+cmp2 cmp-title.png      en_08.png sh_09.png   # 標題畫面
+cmp2 cmp-intro.png      en_10.png sh_10.png   # 開場詢問
+cmp2 cmp-narration.png  en_22.png sh_22.png   # 「這座城市看起來也不一樣了」
+cmp2 cmp-narration2.png en_21.png sh_21.png   # 「我現在到底在哪？」
+cmp2 cmp-narration3.png en_23.png sh_23.png   # 「到底發生了什麼事？」
+cmp2 cmp-panel.png      en_26.png sh_26.png   # 暫停面板
 ls -la "$OUT"

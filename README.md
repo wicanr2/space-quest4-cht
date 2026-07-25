@@ -67,9 +67,13 @@ Space Quest 系列的靈魂在旁白——它整場都在酸主角。這些全�
 |---|---|
 | ![標題對照](screenshots/20-cmp-title.png) | ![開場對照](screenshots/21-cmp-intro.png) |
 
-| 遊戲內旁白 | 暫停面板 |
+| 旁白：這座城市看起來也不一樣了 | 旁白：我現在到底在哪？ |
 |---|---|
-| ![旁白對照](screenshots/22-cmp-narration.png) | ![面板對照](screenshots/23-cmp-panel.png) |
+| ![旁白對照](screenshots/22-cmp-narration.png) | ![旁白對照二](screenshots/23-cmp-narration2.png) |
+
+| 旁白：到底發生了什麼事？ | 暫停面板 |
+|---|---|
+| ![旁白對照三](screenshots/24-cmp-narration3.png) | ![面板對照](screenshots/25-cmp-panel.png) |
 
 ---
 
