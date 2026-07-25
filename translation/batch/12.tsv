@@ -1,0 +1,136 @@
+1518	fdc
+1519	Display "SQ IV Hint Book" #p font: THEFONT #p at: 50 3 )
+1520	Display "SQ IV Hint Book" #p font: THEFONT #p at: 200 3 )
+1521	Display "Page" #p font: THEFONT #p at: 5 3 )
+1522	Display "Page" #p font: THEFONT #p at: 290 3 )
+1523	exit
+1524	next
+1525	prev
+1526	Press this button to put the hint book away.
+1527	Press this button to turn back one page.
+1528	Press this button to turn to the next page.
+1529	Press this with the Reveal-O-Matic Hint Revealer and a hint will be revealed.
+1530	You'll need the Reveal-O-Matic Hint Revealer.
+1531	Your Reveal-O-Matic seems to have exhausted its power supply. You'll have to contact the supplier for a replacement.
+1532	Oh, great! Only half the answer showed! It must be a defective hint module.
+1533	Watch out for that first step...
+1534	From this vantage point high above Xenon you can truly appreciate the scope of the destruction. What a mess!
+1535	You are in the Super Computer's landing bay. Here you see the Sequel police dispatch terminal.
+1536	This is the middle section of the Super Computer's Landing Bay. The ship you hitched a ride on rests here.
+1537	There's a tunnel leading into the middle of the structure.
+1538	You can't actually see those. You just think you can.
+1539	regpath.sh
+1540	Printf "%s needs an 'at:' method." name) "%s theRegion: not defined."
+1541	So why am I standing around?
+1542	Roger Wilco and the Time Rippers Space Quest IV Version %s Scott and Mark really owe a lot to, and couldn't have done even 1 percent as well without the generous help of the following hard-working, self-sacrificing people who probably deserve a lot more money for their unreal efforts:
+1543	THE IMAGE PEOPLE - Jon Bock, Jane Cardinal, Dana Dean, Max Deardorff, Karin A. Young, Donald Waller, Jeff Crowe, Desie Hartman, Eric Kasner, Jim Larsen, Max Deardorff, Nate Larsen, Suzi Livengood, Cheryl Loyd, Michael A. Milo, Gerald Moore, Jennifer Schontz, Cheryl Sweeney, Willis Wong THE MUSIC MASTERS - Ken Allen, Rob Atesalp, Mark Seibert, Orpheus Hanley, Rick Spurgeon, Aubrey Hodges THE DEVELOPMENT SYSTEM PEOPLE - Jeff Stephenson, Robert E. Heitman, Pablo Ghenis, J. Mark Hood, Larry Scott, Dan Foy, Mark Wilden, Eric Hart, Terry McHenry, Ken Koch, Chris Smith, Jack Magne, Martin Peters
+1544	ADDITIONAL MATERIAL/SPECIAL CONTRIBUTIONS- Josh Mandel, Brian K. Hughes, Oliver Brelsford THE PROGRAMMERS WHO MANAGE TO MAKE ALL THIS CRAP WORK - Dan Carver, Neil (the guy who likes to make vols) Matz, Robert Andrews, Oliver Brelsford, Carlos Escobar, Brian K. Hughes, Randy MacNeill, Doug Oldfield, Raoul Said, Jerry Shaw, Max Deardorff Q.A. SPECIMENS - Bill Hilton, Matt Genesi Special Thanks to "Neil and Bob" for getting me "up" when I was "down."
+1545	A NOTE FROM THE DESIGNERS: Please disregard the 3 previous windows of text. A few loose-cannon programmers thought the world needed to see their names a whole lot more often. We apologize for any inconvenience these falsely inflated egos may have caused. Anyway, they've been dealt with (killed). We now return you to the game.
+1546	XW
+1547	AO
+1548	ER
+1549	SR
+1550	AW
+1551	Please enter the correct X/Y coordinates, then press 'DONE'.
+1552	Sorry, you entered in the wrong X/Y coordinates. We'll give you another chance.
+1553	Sorry, wrong X/Y coordinates.
+1554	Okay, here's the dumb copy protection. In your documentation find the X/Y coordinates (letters) for each of the two displayed symbols. Enter the four letters by clicking either the appropriate buttons or typing the correct keys, and finish by pressing either 'DONE' or the 'ENTER' key.
+1555	Display mode: %s
+1556	Score: %d of 315
+1557	Text
+1558	Speech
+1559	Both
+1560	Switch between text and speech.
+1561	We're glad you could play SQIV. As usual, you've been a real pantload.
+1562	Now, you KNEW he was coming, didn't you?!
+1563	Well, that's just great! Now Vohaul's on the loose again, disguised as your SON! You lose 3 out of 2.
+1564	Zero-G skating might be perfect for you, since you've got a Zero-IQ.
+1565	As the green slime dissolves the flesh from your bones, you think, "Hey! This stuff consumes 47 times its weight in acid!"
+1566	Hint: hitting a moving target is more difficult than hitting a stationary LUMP!
+1567	Were you looking for trouble? Maybe you thought you could beat them senseless with your pink bunny rabbit?
+1568	This is Roger. This is Roger on Ortega. Any questions?
+1569	Zap zap, you're dead.
+1570	Well... maybe. It's worth a try.
+1571	As you leave the laser tunnel, you hear a voice announce that the formatting program is beginning, erasing all data in the super computer and dashing all hopes of regaining your son!
+1572	Smoking is bad for your health.
+1573	For a fleeting moment, you are impressed with the droid's accuracy.
+1574	Now this is a pain that'll linger! All the Ben Gay in Florida won't relieve this stiffness.
+1575	That was a LOOoooong first step.
+1576	While you were busy staring blankly at your PocketPal screen, a droid snuck up behind you, tapped you on the shoulder. "Zap. You're it." (DO METALLIZE VOICE, ECHO, ETC.)
+1577	It's not over 'till the fat lady Orat spits... Well, it's over. All over. All over everything!
+1578	Boy, these guys pop up in the most inconvenient places! They seem to have this area secured. Your extra crispy parts surely provide no threat.
+1579	Boy, isn't it just like a Sequel Police cyborg to guard the main entrances and exits?
+1580	I'm sure the Latex Babes appreciate your sacrifice, too bad you can't experience just how appreciative they are.
+1581	Just as you fade from the living organism club you think, in amazement,"So that's what my spleen looks like!"
+1582	You were warned not to try to break into the change machine, but did you listen?
+1583	It looks like shoplifting is taken seriously around here!
+1584	The word "Laser" came to mind after each of the first six shots, but only after the seventh blast were you convinced.
+1585	Next time, don't dilly-dally, dude!
+1586	We hope you'll get yourself together and rejoin us. Isn't this a blast?
+1587	The formatting sequence times out, the computer brain does its thing, and you suddenly realize you've lost the game because you weren't there to see it.
+1588	Your musculature spasms for the last time as the force field shock causes you to give up the ghost.
+1589	Oh, well. Just think proudly of your accomplishment... On second thought, just think - it even happens to IMPORTANT people!
+1590	Why'd you just STAND there?! I guess you just enjoy a laser buzz once in awhile.
+1591	Delete
+1592	Yes
+1593	Are you sure you want to delete this saved game?
+1594	%s is not a valid directory.
+1595	GAME
+1596	Insert the %s disk in drive %s.
+1597	SAVE GAME
+1598	You smell that famous but unidentifiable Monolith Burger Secret Smell(tm).
+1599	Instructions for the MasterBurger 2000 This notice must be posted wherever the MasterBurger 2000 is in use. The hand cursor must be active in order to pick up and install condiments.
+1600	Keyboard: Up & down arrows switch between condiments and burger. When on condiment level, left & right arrows move cursor between the condiments. When on burger level, cursor follows burger. Mouse: Click on condiment to pick it up. Click it again on top of burger to install it. If you're carrying a condiment and you cycle to another cursor, the condiment drops back into its bay.
+1601	Joystick: Moving up & down switches between condiments and burger. When on condiment level, moving left & right moves cursor between the condiments. When on burger level, cursor follows burger.
+1602	Go Beavers!
+1603	QA people were here.
+1604	A real lady NEVER goes Zero-G swimming in a dress!
+1605	Debug - can't cheat for Estros - You need to enter two complete entries - second entry will be Estros' code from now on.
+1606	Debug - can't go to the mall before you go to Estros
+1607	SQ IV Hint Book
+1608	Page
+1609	Global %d: %s
+1610	Global %d: %d
+1611	You now have %d Buckazoids.
+1612	view: %d loop: %d cel: %d posn: %d %d %d heading: %d pri: %d signal: $%x illBits: $%x normal: %d head view: %d OnControl: $%x Origin on: $%x
+1613	class: %s view: %d loop: %d cel: %d posn: %d %d %d heading: %d pri: %d signal: $%x illBits: $%x
+1614	Debug On
+1615	Debug Off
+1616	Current Room: %d name: %s script: %s horizon: %d vanishing X: %d vanishing Y: %d pic angle: %d north: %d south: %d east: %d west: %d style: %d current pic: %d
+1617	vanishing x: %d y: %d
+1618	Error in (%s check:) totAngle [%d] != +-360
+1619	DRAGGING: %d, %d
+1620	%d.pol
+1621	The file '%s' already exists
+1622	Error opening '%s'
+1623	; %s : Picture %d
+1624	%s.mem
+1625	%s.log
+1626	Log file "%s" exists
+1627	QA-COMMENT%d
+1628	Comment line %d of %d:
+1629	The Sarien Encounter
+1630	The Pirates of Pestulon
+1631	Roger Wilco and The Time Rippers
+1632	Latex Babes of Estros
+1633	Vohaul's Revenge
+1634	ROGER JR
+1635	Congratulations, in achieving the coveted rank of "Corn-Wheezer," you have won the Pullet Surprise!
+1636	X %d eggs = %d bonus points Mega-Hi Score: %d
+1637	Lettuce.
+1638	Squeeze me for a plop of mayonnaise.
+1639	Squeeze me for a plop of mustard.
+1640	Squeeze me for a plop of catsup.
+1641	To Top Menu
+1642	Automated Catalog -
+1643	Welcome to our Automated Catalog! Please select from the following departments:
+1644	Electronic Gadgets -
+1645	With many a grind, moan and "Well, I dunno...", the salesbot finally allows you to exchange the plug.
+1646	With great patience, you insert each and every one of the 1999 buckazoids into the salesbot's coin receptor.
+1647	Electronic Mommy -
+1648	THANK YOU FOR SHOPPING Hz SO GOOD!
+1649	Select the plug you wish to purchase.
+1650	for he is your SON!
+1651	WARNING **
+1652	nothing!
+1653	Walk

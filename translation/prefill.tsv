@@ -1,0 +1,29 @@
+Nothing happens.	什麼都沒發生。
+Ortega	歐特加
+You're not close enough.	你離得不夠近。
+Get closer.	靠近點。
+That's not possible now.	現在還辦不到。
+Restore a Game	讀取遊戲
+Cancel	取消
+Change Directory	變更目錄
+No	不是
+OK	確認
+Replace	替換
+Restore	恢復
+Save	儲存
+Save a Game	儲存遊戲
+This directory/disk can hold no more saved games. You must replace one of your saved games or use Change Directory to save on a different directory/disk.	這個目錄/磁碟已無法儲存更多遊戲。你必須替換其中一個存檔遊戲，或使用「改變目錄」在不同的目錄/磁碟上儲存。
+New save-game directory:	新的存檔目錄：
+with:	使用:
+You must type a description for the game.	你必須為遊戲輸入描述。
+Select the game that you would like to restore.	選擇你想要讀取的遊戲。
+Type the description of this saved game.	輸入這個存檔遊戲的描述。
+Your save game disk is full. You must either use another disk or save over an existing saved game.	你的存檔磁片已滿。你必須使用另一張磁片或覆蓋現有的存檔。
+That game was saved under a different interpreter. It cannot be restored.	該遊戲是用不同的直譯器存檔的。無法還原。
+File: %s	檔案：%s
+%s [Collection of size %d]	%s [集合大小 %d]
+%s [List of size %d]	%s [列表大小 %d]
+%s [Set of size %d]	%s [集合大小 %d]
+Restart	重新開始
+Quit	離開
+You are carrying:	你身上帶著：

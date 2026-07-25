@@ -1,0 +1,36 @@
+# 遊戲本體與衍生資源(絕不入 git,patch-only)
+resource.*
+RESOURCE.*
+*.drv
+*.DRV
+*.hep
+*.scr
+sierra.exe
+sciwv.exe
+*.ROM
+game/
+game_extract/
+*.iso
+*.zip
+*.rar
+
+# 字型:倚天點陣字模有版權,自備後用 tools/build_eten_font.py 自行烘
+*.fnt
+tools/assets/eten/
+
+# 手冊掃描(© 軟體世界,不推公開 repo)
+manual/
+*.jpg
+*.jpeg
+
+# build 產物與大型來源
+scummvm-src/
+scummvm-win/
+build/
+out/
+dist-all/
+dist-cht-open/
+extract/
+__pycache__/
+*.o
+*.pyc
