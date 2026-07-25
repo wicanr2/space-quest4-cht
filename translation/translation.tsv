@@ -314,7 +314,7 @@ BlowBy foot thrusters boost the skaters along nicely.	吹風牌腳部推進器�
 Blue frogs on my shoulder makes me hap-py...	藍色青蛙蹲在我肩膀上，讓我開心得不得了……
 Blueberry.	藍莓。
 Boring!	無聊！
-Both	兩者皆有
+Both	語音字幕
 Boy! You don't know what you did to make her mad, but you sure hope you get a chance to smooth things over.	天啊！你不知道自己做了什麼惹她生氣，但你真心希望有機會能把事情圓回來。
 Boy! You'd think after all these years, they'd come up with something more sophisticated than frogs jumping from log to log.	天啊！過了這麼多年，你還以為他們會想出比「青蛙跳木頭」更高明的點子。
 Boy, isn't it just like a Sequel Police cyborg to guard the main entrances and exits?	天啊，續集警察的生化人果然就是這麼愛把守主要出入口。
@@ -359,7 +359,7 @@ Display "Page" #p font: THEFONT #p at: 290 3 )	Display "頁" #p font: THEFONT #p
 Display "Page" #p font: THEFONT #p at: 5 3 )	Display "頁" #p font: THEFONT #p at: 5 3 )
 Display "SQ IV Hint Book" #p font: THEFONT #p at: 200 3 )	Display "SQ4提示手冊" #p font: THEFONT #p at: 200 3 )
 Display "SQ IV Hint Book" #p font: THEFONT #p at: 50 3 )	Display "SQ4提示手冊" #p font: THEFONT #p at: 50 3 )
-Display mode: %s	顯示模式：%s
+Display mode: %s	顯示：%s
 Display {Select the plug you wish to purchase.	顯示 {請選擇你想購買的插頭。
 Do it and die.	你敢就死定了。
 Do something of redeeming social value (Quit)	去做一件有益社會的正經事（離開）
@@ -374,7 +374,7 @@ Don't mess with it.	別亂碰。
 Don't throw the bunny at the Sequel Policeman! He may have a hare trigger.	別把兔子丟向續集警察！他的火氣可能一「觸」即發。
 Don't touch the robot's ear. You don't know where it's been.	別碰機器人的耳朵，你又不知道它去過哪裡。
 Don't you feel dumb standing out in plain sight while trying to trick something into your snare?	你就這樣光明正大站在那裡想把獵物騙進陷阱，不覺得自己很蠢嗎？
-Done	完成
+Done	完畢
 Downloading program to beam	正在把程式下載到光束
 Dragging your tongue across the fine strands of of synthetic hair is almost as enjoyable as running it through a french fry slicer.	用舌頭滑過那些細緻的合成毛髮，快感大概跟拿舌頭去刷薯條切片機差不多。
 Dragging your tongue across the synthetic hair is almost as enjoyable as running it through a french fry slicer.	用舌頭滑過合成毛髮的快感，大概跟拿舌頭去刷薯條切片機差不多。
@@ -796,7 +796,7 @@ Now it's time to settle things once and for all. You'd better be careful, though
 Now that's a clean smelling window.	這扇窗戶聞起來還真乾淨。
 Now this is a pain that'll linger! All the Ben Gay in Florida won't relieve this stiffness.	這下可痛得久了！就算把佛羅里達州所有的痠痛藥膏都擦上，也治不好這身僵硬。
 Now, you KNEW he was coming, didn't you?!	你明明就知道他要來的，對吧？！
-OK	確認
+OK	完畢
 OUCH! You almost got a sliver in your tongue!	哎唷！你差點被木刺插進舌頭！
 Of course I'm sure! Why else would I have chosen it?	當然確定啊！不然我幹嘛選這個？
 Oh No! Sequel Police!	糟了！續集警察！
@@ -910,7 +910,7 @@ Save a Game	儲存遊戲
 Saves your current game.	儲存目前的遊戲進度。
 Say! There's an odd looking specimen.	咦！那是個長相怪異的東西。
 Score:	分數：
-Score: %d of 315	分數：%d（滿分315）
+Score: %d of 315	分數：%d ／ 315
 Scratching your head doesn't make it work any better. It only loosens unsightly dandruff.	抓頭又不會讓腦袋變靈光，只會抓出一堆難看的頭皮屑。
 Sea water and slug slime slowly ooze down the fin of this hideous creature.	海水和蛞蝓黏液順著這隻醜陋生物的鰭緩緩滲流而下。
 Sedimentary layers of rock form a stairway which winds its way down below.	層層沉積岩形成一道階梯，蜿蜒往下方延伸。
@@ -943,6 +943,7 @@ Sniffing the cigar makes you lose what little appetite you had after smelling th
 So far, there are no good methods. Don't fall for ads depicting miracle methods such as "pumps," hormone pills or injections. Your best bet is to tell yourself that it's not the size that counts. Oh, wait, did you say DISK?	目前還沒有什麼好方法。別被那些廣告騙了，什麼「幫浦」、賀爾蒙藥丸還是打針之類的神奇療法都不要信。你最好的辦法就是告訴自己，尺寸不重要。喔，等等，你剛剛說的是「磁碟」嗎？
 So many unanswered questions. The future should prove most interesting for Roger - if he can stay out of trouble long enough to reach it. We're glad you could help Roger get through it all. Thank you for playing Space Quest IV.	還有好多謎團沒解開。只要羅傑能撐過眼前這堆麻煩活到那時候，未來對他來說想必精彩可期。很高興你能幫羅傑撐過這一切。感謝你遊玩《宇宙傳奇 IV》。
 So why am I standing around?	那我還站在這裡幹嘛？
+Software Excitement!	軟體過剩！
 Some people think I taste oily. I don't think so, do you?	有些人覺得我吃起來很油。我倒不這麼認為，你說呢？
 Some rather drab-looking individuals are hogging the bar. This guy's really ugly!	幾個其貌不揚的傢伙霸佔著吧台。這傢伙真的很醜！
 Some rather drab-looking individuals are hogging the bar. This guy's the ugliest of all!	幾個其貌不揚的傢伙霸佔著吧台。這傢伙是裡面最醜的一個！
@@ -968,7 +969,7 @@ Sorry. No brain.	抱歉，沒有腦袋。
 Sound Effects: Ken Allen Rob Atesalp Mark Seibert Orpheus Hanley Rick Spurgeon	音效：Ken Allen Rob Atesalp Mark Seibert Orpheus Hanley Rick Spurgeon
 Space Quest	宇宙傳奇
 Specials	特賣
-Speech	語音
+Speech	僅語音
 Squeeze me for a plop of catsup.	擠我一下，就會噴出一坨番茄醬。
 Squeeze me for a plop of mayonnaise.	擠我一下，就會噴出一坨美乃滋。
 Squeeze me for a plop of mustard.	擠我一下，就會噴出一坨黃芥末醬。
@@ -999,7 +1000,7 @@ Tasting the cooling time pod would not be a good idea.	去舔那台正在散熱�
 TechnoTots Toy Dept.	科技寶貝玩具部
 TechnoTots Toys	科技寶貝玩具
 Technosmell emanates from it.	它散發出一股科技味。
-Text	文字
+Text	僅字幕
 Thank you so much for shopping with us, sir. Do come back soon.	非常感謝您的惠顧，先生。歡迎再度光臨。
 Thanks for saving me. I thought I was a goner.	謝謝你救了我，我還以為自己死定了。
 Thanks to your janitorial ingenuity, the doorlock is now destroyed and you may enter and leave at will.	多虧你當工友練出來的巧手，這扇門鎖已經被你搞爛了，現在你可以隨意進出。

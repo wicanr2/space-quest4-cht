@@ -124,12 +124,13 @@ void GfxFontChinese::draw(uint16 chr, int16 top, int16 left, byte color, bool gr
 
 	const bool upscaled = _screen->getDisplayWidth() > _screen->getWidth();
 
-	// Status-bar path: that bar is only 10 script rows (20 display rows) tall, so a 24px
+	// Compact path: some boxes have their height hard-coded by the game (status bar,
+	// pause-panel readout). See GfxScreen::setCompactTextActive. That bar is only 10 script rows (20 display rows) tall, so a 24px
 	// hi-res glyph overflows it — characters got clipped at the bottom and bled into the
 	// picture. Draw the compact 16x15 glyph 1:1 into the display buffer instead: it fits
 	// inside the bar, stays sharp (no 2x nearest blur), and keeps the game's own centring
 	// because we still advance by the normal char width.
-	if (upscaled && _screen->statusTextActive()) {
+	if (upscaled && _screen->compactTextActive()) {
 		if (drawCompact(point, top, left, color))
 			return;
 	}

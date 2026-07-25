@@ -489,6 +489,11 @@ def rebuild_view(view: SCIView, replacements: dict) -> bytes:
 
             rle_bytes, lit_bytes = encode_cel_streams(bitmap, cel.clearKey)
 
+            # CHT: 若 cel 被加大(見 cmd_encode 的 --allow-resize),把新尺寸寫回 cel table,
+            # 否則引擎會照舊尺寸解讀新串流 → 圖亂掉。
+            struct.pack_into('<H', out, cel.table_offset + 0, cel.width)
+            struct.pack_into('<H', out, cel.table_offset + 2, cel.height)
+
             new_rle_off = len(out)
             out += rle_bytes
             new_lit_off = len(out)
@@ -909,8 +914,13 @@ def cmd_encode(args):
                 raise SystemExit("Pillow required for --replace (PNG input)")
             img = Image.open(png_path)
             if img.size != (cel.width, cel.height):
-                raise SystemExit(f"replacement image {png_path} is {img.size}, "
-                                  f"expected {(cel.width, cel.height)}")
+                if not args.allow_resize:
+                    raise SystemExit(f"replacement image {png_path} is {img.size}, "
+                                      f"expected {(cel.width, cel.height)} "
+                                      f"(pass --allow-resize to change the cel size)")
+                # CHT: 中文塞不進原本的 cel 高度時,允許加大 cel。cel table 的
+                # width/height 一併改寫,rebuild_view 會照新尺寸重編碼串流。
+                cel.width, cel.height = img.size
             bitmap = image_to_indices(img, view.palette, cel.clearKey)
             replacements[(loopNo, celNo)] = bitmap
 
@@ -1146,6 +1156,8 @@ def main():
     p = sub.add_parser('encode', help='re-encode a view, optionally replacing cels')
     p.add_argument('input', help='view file (dump-wrapped or raw)')
     p.add_argument('output')
+    p.add_argument('--allow-resize', action='store_true',
+                   help='允許替換圖與原 cel 尺寸不同(會改寫 cel table 的 width/height)')
     p.add_argument('--replace', action='append',
                     help='loop,cel,pngfile -- replace one cel with a PNG '
                          '(same width/height, RGBA; alpha==0 -> transparent)')

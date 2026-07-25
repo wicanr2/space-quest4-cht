@@ -8,7 +8,7 @@
 
 原版的英文語音全部保留：玩的時候是**英文配音配繁中字幕**。
 
-![遊戲內對白](screenshots/02-dialog-cht.png)
+![開場詢問](screenshots/02-intro-choice.png)
 
 ## 這個 repo 有什麼、沒有什麼
 
@@ -18,7 +18,7 @@
 | 目錄 | 內容 |
 |---|---|
 | `patches/` | ScummVM 引擎改動（`0001-sci-cht-zh_twn.patch` + 新增的 `fontchinese.cpp/h`） |
-| `dist-cht/` | 執行期中文資料：`translation.tsv`（Big5）、中文標題疊圖 `sq4_title.ovl` |
+| `dist-cht/` | 執行期中文資料：`translation.tsv`（Big5）、兩份倚天字型、中文標題疊圖 `sq4_title.ovl`、中文化的暫停面板 `view.947` |
 | `translation/` | 翻譯原始資料：抽字骨架、UTF-8 譯文、譯名表、批次檔 |
 | `tools/` | 抽字、烘字型、合併譯文、疊圖、實機擷取的腳本 |
 | `docs/` | 實作筆記（SCI1.1 踩到的雷與判斷依據） |
@@ -39,7 +39,8 @@ cd scummvm-src
 ./configure --disable-all-engines --enable-engine=sci --disable-detection-full
 make -j$(nproc)
 
-# 3) 把 dist-cht/ 的四個檔（translation.tsv、兩個 .fnt、sq4_title.ovl）放進遊戲目錄
+# 3) 把 dist-cht/ 底下所有檔案（translation.tsv、兩個 .fnt、sq4_title.ovl、view.947）
+#    複製進遊戲目錄
 #    （字型已附在 repo 裡，想自己重烘才需要下面這幾行）
 # python3 tools/build_eten_font.py translation/translation.tsv dist-cht --prefix sq4
 ```
@@ -80,7 +81,11 @@ MT-32 音樂：ScummVM 音效選項選 Roland MT-32，並把自備的 `MT32_CONT
 翻譯走「梗保留、語氣台化」：專有名詞照表譯成中文但不換指涉（Monolith Burger 是「巨石漢堡」，
 不會變成麥當勞），句子用台灣口語寫，美式雙關找中文的等效說法。
 
-![旁白](screenshots/03-narration-cht.png)
+![旁白一](screenshots/03-narration-1.png)
+
+![旁白二](screenshots/04-narration-2.png)
+
+![旁白三](screenshots/05-narration-3.png)
 
 ## 1992 年中文說明書要點
 
@@ -122,19 +127,53 @@ MT-32 音樂：ScummVM 音效選項選 Roland MT-32，並把自備的 `MT32_CONT
 
 完整的踩雷紀錄在 [`docs/lessons-sq4.md`](docs/lessons-sq4.md)。
 
-## 已知限制
+## 中文攻略
 
-**暫停面板的按鈕維持英文。**
+[`docs/walkthrough.md`](docs/walkthrough.md) 是一份繁體中文完整攻略（含劇透警告）。
+它照本專案的譯名表寫，跟遊戲裡看到的中文一致。
 
-![控制面板](screenshots/04-control-panel.png)
+| 章節 | 內容 |
+|---|---|
+| [序章：氙星酒吧與時空裂隙](docs/walkthrough.md#序章氙星酒吧與時空裂隙) | 開場過場 |
+| [第一章：黑暗未來氙星（初訪）](docs/walkthrough.md#第一章黑暗未來氙星初訪街道地下水道與逃亡) | 街道、地下水道、逃亡 |
+| [第二章：艾斯楚斯](docs/walkthrough.md#第二章宇宙傳奇x艾斯楚斯的乳膠美女) | 宇宙傳奇 X 的世界 |
+| [第三章：銀河購物中心（初訪）](docs/walkthrough.md#第三章銀河購物中心初訪血拼打工與偷時空艙) | 血拼、打工、偷時空艙 |
+| [小遊戲：太空母雞小姐](docs/walkthrough.md#小遊戲一太空母雞小姐ms-astro-chicken) | 操作要領 |
+| [小遊戲：巨石漢堡組裝](docs/walkthrough.md#小遊戲二巨石漢堡組裝) | 操作要領 |
+| [第四章：尤倫斯荒原](docs/walkthrough.md#第四章尤倫斯荒原宇宙傳奇一代的懷舊之旅) | 宇宙傳奇一代的懷舊之旅 |
+| [第五章：黑暗未來氙星（二訪）](docs/walkthrough.md#第五章黑暗未來氙星二訪雷射通道機器人巡邏迷宮與超級電腦決戰) | 超級電腦決戰 |
+| [時空艙座標總整理](docs/walkthrough.md#時空艙座標總整理) | 各時空點座標 |
+| [死亡總表](docs/walkthrough.md#死亡總表快速查閱) | 所有死法與怎麼避免 |
+| [分數表（滿分 315）](docs/walkthrough.md#分數表滿分-315) | 加分點 |
+| [彩蛋與致敬](docs/walkthrough.md#彩蛋與致敬) | 系列自嘲梗、其他 Sierra 作品客串 |
 
-`SAVE` / `RESTORE` / `QUIT` 這些按鈕和 `DETAIL` / `VOLUME` / `GAME PAUSED` 這些標籤都是烘進美術圖的字，
-技術上可以解碼重繪。不做的理由是尺寸：按鈕圖塊 50×15，扣掉立體邊框只剩約 11 像素的文字帶，
-倚天字模縮到那個高度後筆劃多的字會糊成一團；`DETAIL` 那批更只有 9 像素高，任何中文都不可能可讀。
-放大圖塊會打壞腳本寫死的面板版面。與其塞一排糊掉的中文，不如維持英文。
-面板裡那個顯示模式／分數的小黑框同理——它的行距是寫死的 9 個掃描列，中文兩行必定重疊。
+攻略是交叉比對多份英文資料後改寫的，並用本專案抽出來的遊戲原文核實過店名、道具與提示。
+查不到或來源互相矛盾的地方，文中用 `> 待查證` 標出，沒有編造步驟。
 
-標題畫面則相反：logo 下方有整片空白，所以中文副標是用疊圖加上去的，沒有蓋掉原本的英文 logo。
+## 介面
+
+暫停面板整片都是中文，包含烘進美術圖的按鈕字：
+
+![暫停面板](screenshots/06-control-panel-cht.png)
+
+`SAVE` / `RESTORE` / `RESTART` / `QUIT` / `TEXT` / `PLAY` 這些按鈕，以及 `GAME PAUSED`、
+`DETAIL` / `VOLUME` / `SPEED` 這些標籤，原本都是烘進 `view.947` 的美術字。按鈕圖塊只有 50×15，
+扣掉立體邊框剩不到 11 像素的文字帶，中文縮到那個高度必糊——所以不是縮字，而是**把圖塊加高到 19 像素**，
+吃掉按鈕之間原本留白的間距，讓 16×15 的倚天字模能原尺寸放進去。標籤同理加高，寬度不夠就往右加寬。
+立體邊框的像素完全沿用原圖（把原圖拆成上框／可重複中段／下框再重組），底色與字色也是從原圖自己
+統計出來的，不是自己配的顏色。
+
+面板右下角那個顯示模式／分數的小框行距是寫死的 9 個掃描列，24 像素的中文兩行會疊在一起。
+這種「高度被寫死」的框改走 16×15 的緊湊字模，1:1 畫進高解析緩衝區（等於 7.5 個掃描列）就塞得下：
+
+![面板讀數](screenshots/09-panel-readout.png)
+
+要不要走緊湊字模是**寫在譯文裡**的（值的開頭放一個 `0x0E` 標記），不是在引擎裡寫死字串清單，
+所以之後遇到別的固定高度小框，補一筆譯文就好。
+
+狀態列同理——它只有 10 個掃描列高：
+
+![狀態列](screenshots/08-statusbar-zoom.png)
 
 ## 字型
 

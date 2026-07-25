@@ -35,14 +35,13 @@
 | Skate-O-Rama | 溜冰樂園 | |
 | Big and Tall Alien | 大尺碼外星人服飾 | 賣場店名 |
 | Hz So Good | 赫茲好爽 | 電器行，雙關 (Hurts So Good) |
-| Software Excitement! | 軟體大驚奇！ | 賣場軟體店 |
-| Automated Catalog | 自動型錄 | |
+| Software Excess | 軟體過剩 | 賣場軟體店；遊戲內原文是 Excess 不是 Excitement |
+| Automated Catalog | 自動型錄 | 型錄機的分類選單 |
 | Electronic Gadgets | 電子小玩意 | 型錄分類 |
 | Electronic Mommy | 電子媽咪 | 型錄分類 |
 | Super Computer | 超級電腦 | Vohaul 的載體 |
 | Sludge Bandit | 爛泥大盜 | |
 | Ulence Flats | 尤倫斯荒原 | SQ1 場景 |
-| Nukem Dukem Robots | 核彈公爵機器人 | 遊戲廳機台 |
 | Ms. Astro Chicken | 太空母雞小姐 | 迷你遊戲 |
 | Astro Chicken | 太空雞 | SQ3 迷你遊戲 |
 | Pullet Surprise | 母雞獎 | 雙關 Pulitzer Prize（普立茲獎）；譯註走「母雞獎（普立茲獎的諧音）」 |
@@ -62,7 +61,7 @@
 | You are carrying: | 你身上帶著： |
 | nothing! | 什麼都沒有！ |
 | Score | 分數 |
-| Cancel / OK | 取消／確認 |
+| Cancel / OK | 取消／完畢 |（道具欄的 OK 依 1992 說明書作「完畢」）
 
 ## 四、風格準則（折衷台化）
 
