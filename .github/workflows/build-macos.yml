@@ -7,6 +7,10 @@ name: build-macos
 # build-macos.yml(SCI0 EGA 同軌),差異見檔內註解與 tools/package_macos_data.sh。
 #
 # [HARD] ScummVM configure 不是 autoconf,CXXFLAGS/LDFLAGS 只能當環境變數餵。
+# [HARD] CXXFLAGS 一律帶 -fstack-protector-strong。issue #1(macOS 跑完片頭就 SIGABRT)
+#   的根因是 GfxFontChinese::drawCompact 的堆疊緩衝區溢位 48 bytes;clang 在 arm64 預設
+#   開 stack protector 才擋下來,而當時 Linux/Windows build 沒開,同一份溢位靜靜跑過去、
+#   三平台測試全綠。所有平台都開,這類 bug 才會在第一個踩到的人身上就炸,而不是挑平台炸。
 # [HARD] 不用 brew 的 sdl2(2026 起是 sdl2-compat shim,runtime 才 dlopen libSDL3,
 #        dylibbundler 抓不到,玩家端黑畫面)。改自源碼編 pinned 真 SDL2。
 # universal binary 用「每弧各編一次 + lipo -create」,不用單次雙 -arch 塞給 configure
@@ -127,7 +131,7 @@ jobs:
         working-directory: ${{ runner.temp }}/scummvm-arm64
         run: |
           set -euo pipefail
-          export CXXFLAGS="-arch arm64 -mmacosx-version-min=${MIN_OS}"
+          export CXXFLAGS="-arch arm64 -mmacosx-version-min=${MIN_OS} -fstack-protector-strong"
           export LDFLAGS="$CXXFLAGS"
           ./configure --disable-all-engines --enable-engine=sci --disable-detection-full \
             --enable-release $LEAN_FLAGS --with-sdl-prefix="$RUNNER_TEMP/sdl-arm64"
@@ -142,7 +146,7 @@ jobs:
           set -euo pipefail
           arch -x86_64 /bin/bash -c "
             set -euo pipefail
-            export CXXFLAGS='-arch x86_64 -mmacosx-version-min=${MIN_OS}'
+            export CXXFLAGS='-arch x86_64 -mmacosx-version-min=${MIN_OS} -fstack-protector-strong'
             export LDFLAGS=\"\$CXXFLAGS\"
             ./configure --disable-all-engines --enable-engine=sci --disable-detection-full \
               --enable-release $LEAN_FLAGS --with-sdl-prefix='$RUNNER_TEMP/sdl-x86_64'

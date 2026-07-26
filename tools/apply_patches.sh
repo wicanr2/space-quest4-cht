@@ -30,8 +30,11 @@ patch -p1 -d "$SRC" < "$HERE/patches/0001-sci-cht-zh_twn.patch"
 
 cat <<'EOS'
 >> 已套用。configure(docker 內;MT-32 必須啟用,不可帶 --disable-mt32emu):
+   export CXXFLAGS="-fstack-protector-strong"
    ./configure --disable-all-engines --enable-engine=sci --disable-detection-full
    make -j$(nproc)
+>> CXXFLAGS 的 -fstack-protector-strong 不要拿掉:issue #1(macOS 跑完片頭就 SIGABRT)
+   是繪字路徑的堆疊溢位,clang 在 arm64 預設開才擋下來;Linux 沒開就靜靜跑過去。
 >> 驗證:grep USE_MT32EMU config.h 應為 #define
 >> 啟用中文:target config 寫 language=tw(SCI1.1 走 config,不要用命令列 --language)
 EOS

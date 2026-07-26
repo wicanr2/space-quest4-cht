@@ -30,8 +30,20 @@ namespace Sci {
 
 // Big5 font data file shipped alongside the game (part of the CHT patch).
 static const char *kChineseFontFile = "sq4_big5.fnt";
-// Rendered glyph box: Big5Font glyphs are 16px wide (kChineseTraditionalWidth).
+// Advance width used when laying the glyph out on screen. NOTE this is deliberately
+// narrower than the glyph bitmap itself -- it is a layout metric, NOT a buffer stride.
 static const int kBig5Width = 12;
+
+// Upper bound of what Big5Font::drawBig5Char() may write into a scratch buffer.
+// Any buffer handed to it must be sized by these, never by kBig5Width: the low-res
+// status-bar path passes kChineseTraditionalWidth (16) as the destination pitch, so a
+// kBig5Width-sized buffer is 48 bytes short and drawBig5Char writes straight through
+// the stack canary. That is what crashed the macOS build (issue #1): arm64 builds ship
+// with -fstack-protector-strong, so it aborted at the first status-bar draw; on Linux
+// the same overflow ran silently. Upstream's kChineseTraditionalMaxHeight is private,
+// hence the local copy.
+static const int kBig5GlyphMaxW = Graphics::Big5Font::kChineseTraditionalWidth;  // 16
+static const int kBig5GlyphMaxH = 16;
 
 // Hi-res Big5 font (own format, bake_hires_font.py): 32px-wide, kHiH-row glyphs drawn
 // straight onto the 640x400 display buffer for sharp strokes under ZH_TWN upscaling.
@@ -48,7 +60,9 @@ GfxFontChinese::GfxFontChinese(ResourceManager *resMan, GfxScreen *screen, GuiRe
 	if (fontFile.open(kChineseFontFile)) {
 		_big5 = new Graphics::Big5Font();
 		_big5->loadPrefixedRaw(fontFile, _big5Height);
-		_big5Height = _big5->getFontHeight();
+		// Clamp: the glyph scratch buffers below are sized for kBig5GlyphMaxH rows, and
+		// a font file claiming more would overflow them.
+		_big5Height = MIN<int>(_big5->getFontHeight(), kBig5GlyphMaxH);
 	} else {
 		warning("GfxFontChinese: could not open '%s'; Chinese glyphs will be blank", kChineseFontFile);
 	}
@@ -142,7 +156,7 @@ void GfxFontChinese::draw(uint16 chr, int16 top, int16 left, byte color, bool gr
 		return;
 	}
 
-	byte glyph[kBig5Width * 16];
+	byte glyph[kBig5GlyphMaxW * kBig5GlyphMaxH];
 	memset(glyph, 0, sizeof(glyph));
 	bool drawn = false;
 	if (_big5)
@@ -175,7 +189,7 @@ void GfxFontChinese::draw(uint16 chr, int16 top, int16 left, byte color, bool gr
 bool GfxFontChinese::drawCompact(uint16 point, int16 top, int16 left, byte color) {
 	if (!_big5)
 		return false;
-	byte glyph[kBig5Width * 16];
+	byte glyph[kBig5GlyphMaxW * kBig5GlyphMaxH];
 	memset(glyph, 0, sizeof(glyph));
 	if (!_big5->drawBig5Char(glyph, point, Graphics::Big5Font::kChineseTraditionalWidth,
 	                         _big5Height, Graphics::Big5Font::kChineseTraditionalWidth,

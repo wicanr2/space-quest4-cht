@@ -143,3 +143,48 @@ SQ4 CD 語音版拿掉了防拷關卡，但玩家會問「你怎麼確定後段�
 selector 的身分要另外用資料反推。**（同 rulebook 62 靜態反追溯源）
 
 完整結論與對照表在 [`copy-protection.md`](copy-protection.md)。
+
+---
+
+## 九、緩衝區要照 pitch 配置，不是照繪製寬度（issue #1）
+
+macOS 版跑完片頭就跳出。回報者附的 crash report 直接點名：
+
+```
+Application Specific Information: stack buffer overflow
+4  scummvm.bin  Sci::GfxFontChinese::drawCompact(...)   ← __stack_chk_fail
+6  scummvm.bin  Sci::GfxText16::DrawStatus(...)
+```
+
+狀態列是片頭結束後第一個被畫的東西，時機完全吻合。原因是這兩個數字被當成同一個：
+
+| | 值 | 是什麼 |
+|---|---|---|
+| `kBig5Width` | 12 | **排版**用的 advance width，字要間隔多寬 |
+| `kChineseTraditionalWidth` | 16 | **點陣圖**的一列有多寬，也就是 `drawBig5Char` 的 destination pitch |
+
+`drawCompact` 用 16 當 pitch 去填一個 `byte glyph[kBig5Width * 16]`（192 bytes）的緩衝區，
+而 `drawBig5Char` 實際會寫到 `16 × 15 = 240` bytes——超出 48 bytes，正好蓋過 stack canary。
+
+同一支程式碼的另一條路徑 `draw()` 沒事，是因為它 pitch 傳 `kBig5Width`（12×15 = 180 < 192）。
+**同一個緩衝區宣告，一條安全一條溢位**，差別只在呼叫端傳了哪個常數。
+
+### 為什麼三個平台只有 macOS 炸
+
+clang 在 arm64 預設開 `-fstack-protector-strong`，寫穿 canary 就 `SIGABRT`。當時 Linux 與
+Windows build 都沒開，同一份溢位靜靜跑過去，實機測試全綠。
+
+驗證方式就是把這個變因補回去：只把 `fontchinese.cpp` 加上 `-fstack-protector-strong` 重編、
+relink，Linux 立刻在同一個位置死掉（開場問「要跳過還是看完」之後），修好再跑就活過整段。
+**能重現的失敗訊號比讀十遍程式碼有用。**
+
+現在三個平台的 build 都帶 `-fstack-protector-strong`（`tools/apply_patches.sh` 的 configure
+指引與 `.github/workflows/build-macos.yml` 兩個弧都標成 `[HARD]`）。
+
+### 留下來的規則
+
+- 交給別人填的緩衝區，尺寸要照**你傳給它的 pitch × 高度**算，不要照繪製時用的寬度。
+  兩者剛好都叫「寬度」，但一個是排版度量、一個是記憶體步長。
+- 上游把 `kChineseTraditionalMaxHeight` 設成 private，就自己寫一份具名上限常數，
+  不要拿手邊剛好順眼的數字（原本那個 `16` 是硬寫的字面值，跟 pitch 無關）。
+- 平台差異造成的「只有某一台會壞」，多半不是那台的問題，是**只有那台開了檢查**。
