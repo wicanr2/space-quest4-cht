@@ -223,11 +223,18 @@ MT-32 音效：三個包的引擎都編入了 Munt（MT-32 模擬），但 ROM �
 ### 驗證到什麼程度
 
 - **Linux AppImage**：實機跑過，中文正常。
-- **Windows**：在 Wine 下實測過啟動流程與設定產生（抓到並修掉三個 `.bat` 的 bug），
-  但**沒有在真實 Windows 上測過**。
+- **Windows**：在 Wine 下實測過啟動流程、設定產生與執行檔相依（抓到並修掉三個 `.bat` 的
+  bug，以及一次會讓程式一開就 `c0000135` 的 DLL 相依），但**沒有在真實 Windows 上測過**。
 - **macOS**：由 GitHub Actions 的 `macos-14` runner 建置，`scummvm` 與 `libSDL2` 都確認是
-  universal（arm64 + x86_64），中文資料五個檔都在 `Contents/Resources/cht-data/`；
-  但**沒有在實機 macOS 上開過**。遇到問題歡迎開 issue。
+  universal（arm64 + x86_64），中文資料七個檔都在 `Contents/Resources/cht-data/`；
+  **沒有在實機 macOS 上開過**。
+
+v1.0 的 macOS 版跑完片頭就會閃退（[issue #1](https://github.com/wicanr2/space-quest4-cht/issues/1)）。
+原因是繪字路徑上一個算錯大小的堆疊緩衝區——三個平台都在溢位，只有 macOS 因為 clang 在 arm64
+預設開 `-fstack-protector-strong` 而當場中止，另外兩個平台靜靜跑過去。v1.0.1 起三個平台的
+build 都開這個檢查，根因寫在 [`docs/lessons-sq4.md`](docs/lessons-sq4.md#九緩衝區要照-pitch-配置不是照繪製寬度issue-1)。
+
+**「沒在實機上開過」是真的會出事的**，遇到問題請開 issue，附上崩潰報告最有幫助。
 
 ---
 
