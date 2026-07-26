@@ -35,6 +35,11 @@ cat <<'EOS'
    make -j$(nproc)
 >> CXXFLAGS 的 -fstack-protector-strong 不要拿掉:issue #1(macOS 跑完片頭就 SIGABRT)
    是繪字路徑的堆疊溢位,clang 在 arm64 預設開才擋下來;Linux 沒開就靜靜跑過去。
+>> Windows(mingw)交叉編譯要多一步:__stack_chk_fail 在 libssp,而 ScummVM 的連結行是
+   $(LDFLAGS) ... $(OBJS) $(LIBS),放 LDFLAGS 會排在物件之前解析不到。configure 後補:
+     echo "LIBS += $(x86_64-w64-mingw32-gcc -print-file-name=libssp.a)" >> config.mk
+   要給**靜態封存檔的絕對路徑**,不能寫 -lssp —— 後者會連到 import lib,產生
+   libssp-0.dll 執行期相依,而打包腳本不收那個 DLL,玩家一開就是 c0000135。
 >> 驗證:grep USE_MT32EMU config.h 應為 #define
 >> 啟用中文:target config 寫 language=tw(SCI1.1 走 config,不要用命令列 --language)
 EOS

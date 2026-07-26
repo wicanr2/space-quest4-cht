@@ -5,6 +5,12 @@ RESOURCE.*
 *.DRV
 *.hep
 *.scr
+# 例外:dist-cht/271.* 是本專案自己用 tools/build_room271.py 組出來的,不是 Sierra 的資源。
+# 上面兩條是為了擋遊戲目錄裡的 335.scr / 390.hep 那類原始資源,把這兩個一起吞掉了——
+# 結果是它們從沒進過 git,macOS CI(從 repo checkout 打包)因此少檔,靠打包腳本的
+# 檔案清單 guard 才抓到。
+!dist-cht/271.scr
+!dist-cht/271.hep
 sierra.exe
 sciwv.exe
 *.ROM
