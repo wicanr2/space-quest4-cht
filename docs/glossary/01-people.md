@@ -10,7 +10,7 @@
 | Two Guys from Andromeda | 仙女座雙傑 | ✓ | ✓ | ✓ | 遊戲作者的自嘲客串。三代是救援對象 |
 | Sequel Police | 續集警察 | — | — | ✓ | 四代的追兵。`Sequel Policeman` → 續集警察；生化人型態 → 續集警察的生化人 |
 | Elmo | 艾爾莫 | — | ✓ | — | 三代的角色（照片道具） |
-| Monochrome Boys | 單色幫 | — | — | ✓ | 四代的街頭幫派。片尾配音表另作「單色小子」，見[尚未對齊](07-pending.md) |
+| Monochrome Boys | 單色幫 | — | — | ✓ | 四代的街頭幫派。片尾配音表原作「單色小子」，2026-07-30 已統一 |
 | Professor Lloyd | 洛伊德教授 | — | — | ✓ | 氙星超級電腦計畫的主設計師 |
 | Cluck Egger | 克拉克蛋哥 | — | — | ✓ | 《太空雞》廣告裡的養雞專家，惡搞 Chuck Yeager |
 
